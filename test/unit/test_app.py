@@ -1,8 +1,6 @@
 # Unit Testing
 import pytest
 import sys
-import os
-sys.path.append(os.getcwd())
 from microblog import app
 
 # Testing website HTTP Get requests
