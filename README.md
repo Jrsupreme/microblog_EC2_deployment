@@ -2,15 +2,9 @@
 
 Deployment Workload 3: Manual Deployment to EC2 with Monitoring
 
-This documentation details the steps involved in manually deploying a microblog application to an EC2 instance and setting up basic monitoring.
-
 ### Purpose
 
-This workload aims to:
-
-- Shift from using AWS managed services to manually provisioning infrastructure.
-- Gain practical experience with deploying and monitoring an application.
-- Introduce the concept of a CI/CD pipeline using Jenkins.
+This workload focuses on manually building and managing infrastructure for a web application, transitioning away from AWS managed services. Unlike Workloads 1 and 2, which relied on AWS Elastic Beanstalk for automated infrastructure provisioning, Workload 3 shifts towards a self-managed approach.
 
 ### Steps
 
