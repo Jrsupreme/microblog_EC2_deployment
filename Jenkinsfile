@@ -1,18 +1,24 @@
 pipeline {
-  agent any
+    agent any
     stages {
-        stage ('Build') {
+        stage('Build') {
             steps {
                 sh '''#!/bin/bash
-                <enter your code here>
+                python3.9 -m venv venv
+                source venv/bin/activate
+		export FLASK_APP=microblog.py
+                pip install -r requirements.txt
+                pip install gunicorn pymysql cryptography
+		flask translate compile
+                flask db upgrade
                 '''
             }
         }
-        stage ('Test') {
+        stage('Test') {
             steps {
                 sh '''#!/bin/bash
                 source venv/bin/activate
-                py.test ./tests/unit/ --verbose --junit-xml test-reports/results.xml
+                pytest ./tests/unit/ --verbose --junit-xml test-reports/results.xml
                 '''
             }
             post {
@@ -21,28 +27,29 @@ pipeline {
                 }
             }
         }
-      stage ('OWASP FS SCAN') {
+        stage('OWASP FS SCAN') {
             steps {
                 dependencyCheck additionalArguments: '--scan ./ --disableYarnAudit --disableNodeAudit', odcInstallation: 'DP-Check'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
-      stage ('Clean') {
+        stage('Clean') {
             steps {
                 sh '''#!/bin/bash
                 if [[ $(ps aux | grep -i "gunicorn" | tr -s " " | head -n 1 | cut -d " " -f 2) != 0 ]]
                 then
-                ps aux | grep -i "gunicorn" | tr -s " " | head -n 1 | cut -d " " -f 2 > pid.txt
-                kill $(cat pid.txt)
-                exit 0
+                    ps aux | grep -i "gunicorn" | tr -s " " | head -n 1 | cut -d " " -f 2 > pid.txt
+                    kill $(cat pid.txt)
+                    exit 0
                 fi
                 '''
             }
         }
-      stage ('Deploy') {
+        stage('Deploy') {
             steps {
                 sh '''#!/bin/bash
-                <enter your code here>
+                source venv/bin/activate
+                gunicorn -b :5000 -w 4 microblog:app &
                 '''
             }
         }
