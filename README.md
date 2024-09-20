@@ -34,12 +34,13 @@ This workload marks a transition from relying on AWS managed services to indepen
     
     Nginx
     
-    `location / {
+    ```bash
+    location / {
         proxy_pass http://127.0.0.1:5000;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;   
-    }`
-    
+    }
+    ```
     This Nginx configuration block is setting up a reverse proxy to forward incoming requests to our Flask application gunicorn running on port 5000.
     
 8. **Application Startup:**
