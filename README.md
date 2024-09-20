@@ -214,6 +214,9 @@ This workload marks a transition from relying on AWS managed services to indepen
         - Access Grafana in your web browser using the server's public IP address and port 3000.
         - Create a data source for Prometheus.
         - Import dashboards or create custom dashboards to visualize metrics from your application.
+   
+    ![Screenshot (81)](https://github.com/user-attachments/assets/651c7e9c-dac6-420a-99d7-1a5c04857094)
+
 
 ### Issues and Troubleshooting
 
